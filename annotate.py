@@ -74,7 +74,19 @@ if __name__=='__main__':
     ap.add_argument("-v", "--video_file", required=True, help="Path to the video file to annotate one object")
     ap.add_argument('-r', '--rotation', required=True, help="Rotation angle for frames")
     ap.add_argument('-c', '--class_name', required=True, help="Name of object's class")
+    ap.add_argument('-f', '--class_file', required=False, help="Path to class file to create classes' list")
     args = ap.parse_args()
+    
+    classes = []
+    if args.class_file is not None and not os.path.exists('classes.csv'):
+        
+        with open(args.class_file, 'r') as f:
+            classes = [x.strip() for x in f.readlines() if x is not None]
+        
+        with open('classes.csv', 'w') as f:
+            filewriter = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for i, c in enumerate(classes):
+                filewriter.writerow([c, str(i)])
     
     fig, ax = plt.subplots()        
     if not os.path.isdir(os.path.basename(args.video_file)):
