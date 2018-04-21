@@ -21,12 +21,6 @@ if __name__=='__main__':
         for line in reader:
             new_csv = line
             x1, y1, x2, y2 = [int(x) for x in new_csv[1:-1]]
-            if x2<x1:
-                new_csv[1] = x2
-                new_csv[3] = x1  
-            if y2<y1:
-                new_csv[2] = y2
-                new_csv[4] = y1 
             if abs((y2-y1)*(x2-x1))<=int(args.min_area):
                 continue
             splits = line[0].split('/')

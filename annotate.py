@@ -51,7 +51,7 @@ class Video_Bbox(object):
                 
                 with open('annotations.csv','a') as f: 
                     csv_writer = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                    csv_writer.writerow([os.path.abspath(self.img_paths[self.index]), int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]), self.cls_name])
+                    csv_writer.writerow([os.path.abspath(self.img_paths[self.index]), int(bbox[0]), int(bbox[2]), int(bbox[1]), int(bbox[3]), self.cls_name])
                 print('Frame %d/%d'%(self.index+1, len(self.img_paths)))
             self.ax.clear()
             self.index+=1
