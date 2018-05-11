@@ -1,5 +1,7 @@
 import argparse
 import csv
+import os
+import glob
 
 ap = argparse.ArgumentParser()
 ap.add_argument('-c', '--csv_file', help="CSV file to add background images to", required=True)
