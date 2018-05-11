@@ -22,7 +22,17 @@ with open('annotations_full.csv', 'w') as f:
 	for x in textdata:
 		img = Image.open(x[0])
 		w, h = img.size
-		writer.writerow([x[0], int(h-float(x[5])), int(float(x[2])), int(h-float(x[3])), int(float(x[4])), x[1]])
+		if (int(h-float(x[5])) != int(h-float(x[3])) and int(float(x[2])) != int(float(x[4]))):
+			if (int(h-float(x[5])) > int(h-float(x[3]))):
+				p = x[3] 
+				x[3] = x[5]
+				x[5] = p
+			if (int(float(x[2])) > int(float(x[4]))):
+                                p = x[2]
+                                x[2] = x[4]
+                                x[4] = p
+		
+			writer.writerow([x[0], int(h-float(x[5])), int(float(x[2])), int(h-float(x[3])), int(float(x[4])), x[1]])
 
 with open('classes.csv', 'r') as f:
 	with open('index.txt', 'w') as g:
