@@ -97,6 +97,8 @@ class Video_Bbox(object):
         if event.key in ['N', 'n']:
             self.ax.clear()
             self.index+=1
+            if self.index==len(self.img_paths):
+                exit()
             img = plt.imread(self.img_paths[self.index])
             self.ax.imshow(img)
             self.ax.set_yticklabels([])
@@ -117,10 +119,10 @@ if __name__=='__main__':
     args = ap.parse_args()
     
     with open(args.class_file, 'r') as f:
-        classes = [x.strip() for x in f.readlines() if x is not None]
+        classes = [x.strip().split(',')[0] for x in f.readlines() if x is not None]
     if not os.path.exists('classes.csv'):
         with open('classes.csv', 'w') as f:
-            filewriter = csv.writer(f, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            filewriter = csv.writer(f, delimiter=',', quotechar=None, quoting=csv.QUOTE_MINIMAL)
             for i, c in enumerate(classes):
                 filewriter.writerow([c, str(i)])
     
