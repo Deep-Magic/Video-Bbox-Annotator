@@ -24,18 +24,19 @@ if __name__=='__main__':
         textdata = [x.strip().split(',') for x in f.readlines()] 
     
     img_files = set()
-    [img_files.add(x[0]) for x in textdata]
+    [img_files.add(x[0]) for x in textdata if x[3]!='']
     img_files = sorted(list(img_files))
     
     for i, f in enumerate(img_files):
-        img = Image.open(f)
-        width, height = img.size
-        dic = {'file_name': f, 'id': i, 'height': height, 'width': width}
-        images.append(dic)
+        if os.path.exists(f):
+            img = Image.open(f)
+            width, height = img.size
+            dic = {'file_name': f, 'id': i, 'height': height, 'width': width}
+            images.append(dic)
     
     ann_index = 0
     for i, x in enumerate(textdata):
-        if x[3]!='':
+        if x[3]!='' and x[0] in img_files:
             img_id = img_files.index(x[0])
             bbox = [int(p) for p in x[1:-1]]
             cls = classes.index(x[-1])+1
